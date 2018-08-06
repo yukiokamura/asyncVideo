@@ -94,8 +94,3 @@ window.asyncVideo = (classname = 'video-async')=>{
 
   new AsyncVideo(classname);
 }
-
-
-window.onload = ()=>{
-  asyncVideo();
-}
