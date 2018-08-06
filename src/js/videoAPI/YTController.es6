@@ -1,10 +1,12 @@
 export default class YTController{
   constructor(videoData){
-    const player = new YT.Player(videoData.divID,{
-      width:videoData.width,
-      height:videoData.height,
+    this.player = new YT.Player(videoData.divID,{
       videoId: videoData.id,
-      playerVars: { 'autoplay': videoData.isAutoPlay },
-    })
+      playerVars:{
+        autoplay:videoData.isAutoPlay
+      },
+      width: videoData.width,
+      height:videoData.height,
+    });
   }
 }

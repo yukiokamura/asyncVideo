@@ -4,8 +4,9 @@ import URLPurse from './model/Urlpurse.es6';
 
 class AsyncVideo {
   constructor(calssName = 'video-async'){
+    let youtubeSrc
     this.isYoutube = false;
-    this.target =  document.getElementsByClassName( "video-async" );
+    this.target =  document.getElementsByClassName( calssName);
     this.videoData = [];
     const urlPurse = new URLPurse();
 
@@ -26,27 +27,32 @@ class AsyncVideo {
         width:item.clientWidth,
         height:item.clientHeight
       }
-      this.setInner(item,r);
+      this.setInner(item,r,classname);
       this.videoData.push(videoData);
 
     }
-    console.log(this.isYoutube);
+    // console.log(this.isYoutube);
     if (this.isYoutube) {
       this.embedYTTag();
-    }
-
-    //window load event
-    window.onload = ()=>{
-      for (const item of this.videoData) {
-        if (item.videoType == 'youtube') {
-          const ytController = new YTController(item);
-        }else if(item.videoType == 'vimeo'){
-          const vmController = new VMController(item);
+      window.onYouTubeIframeAPIReady = ()=>{
+        for (const item of this.videoData) {
+          this.playerSetValue(item);
         }
+      }
+    }else{
+      for (const item of this.videoData) {
+        this.playerSetValue(item);
       }
     }
 
+  }
 
+  playerSetValue(item){
+    if (item.videoType == 'youtube') {
+      const ytController = new YTController(item);
+    }else if(item.videoType == 'vimeo'){
+      const vmController = new VMController(item);
+    }
   }
 
   get_dataURL(element = false,key='videoUrl'){
@@ -54,11 +60,11 @@ class AsyncVideo {
     return element.dataset[key];
   }
 
-  setInner(element = false,divID){
+  setInner(element = false,divID,classname="video-async"){
     if (!element) return false;
 
     element.insertAdjacentHTML('afterbegin',
-      `<div class="video-async--inner" id="${divID}"></div>`
+      `<div class="${classname}--inner" id="${divID}"></div>`
     );
   }
 
@@ -82,4 +88,14 @@ class AsyncVideo {
   }
 }
 
-const a = new AsyncVideo();
+
+
+window.asyncVideo = (classname = 'video-async')=>{
+
+  new AsyncVideo(classname);
+}
+
+
+window.onload = ()=>{
+  asyncVideo();
+}
