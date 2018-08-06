@@ -27,7 +27,7 @@ class AsyncVideo {
         width:item.clientWidth,
         height:item.clientHeight
       }
-      this.setInner(item,r,classname);
+      this.setInner(item,r,calssName);
       this.videoData.push(videoData);
 
     }
