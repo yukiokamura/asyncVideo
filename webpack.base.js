@@ -25,7 +25,9 @@ const config = {
       ]
     },
     plugins: [
-
+      new webpack.ProvidePlugin({
+        "Promise": "bluebird"
+      })
     ],
 };
 

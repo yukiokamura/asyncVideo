@@ -1,7 +1,7 @@
+require("babel-polyfill");
 import YTController from './videoAPI/YTController.es6';
 import VMController from './videoAPI/VMController.es6';
 import URLPurse from './model/Urlpurse.es6';
-
 class AsyncVideo {
   constructor(calssName = 'video-async'){
     let youtubeSrc
